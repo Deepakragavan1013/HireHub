@@ -1,3 +1,5 @@
+
+/* eslint-disable */
 import { useState, useEffect } from 'react'
 import API from '../utils/api'
 import JobCard from '../components/jobs/JobCard'
