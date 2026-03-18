@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -15,19 +15,19 @@ const JobDetail = () => {
   const [coverLetter, setCoverLetter] = useState('')
   const [resume, setResume] = useState(null)
 
-  useEffect(() => {
-    const fetchJob = async () => {
-      try {
-        const { data } = await API.get(`/jobs/${id}`)
-        setJob(data)
-      } catch (error) {
-        toast.error('Job not found')
-        navigate('/jobs')
-      }
-      setLoading(false)
+useEffect(() => {
+  const fetchJob = async () => {
+    try {
+      const { data } = await API.get(`/jobs/${id}`)
+      setJob(data)
+    } catch (error) {
+      toast.error('Job not found')
+      navigate('/jobs')
     }
-    fetchJob()
-  }, [id])
+    setLoading(false)
+  }
+  fetchJob()
+}, [id, navigate])
 
   const handleApply = async (e) => {
     e.preventDefault()

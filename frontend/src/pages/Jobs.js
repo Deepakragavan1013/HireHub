@@ -1,6 +1,4 @@
-
-/* eslint-disable */
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import API from '../utils/api'
 import JobCard from '../components/jobs/JobCard'
 
@@ -11,7 +9,7 @@ const Jobs = () => {
   const [location, setLocation] = useState('')
   const [jobType, setJobType] = useState('')
 
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     try {
       setLoading(true)
       const { data } = await API.get('/jobs', {
@@ -20,13 +18,14 @@ const Jobs = () => {
       setJobs(data)
     } catch (error) {
       console.error(error)
+    } finally {
+      setLoading(false)
     }
-    setLoading(false)
-  }
+  }, [search, location, jobType])
 
   useEffect(() => {
     fetchJobs()
-  }, [])
+  }, [fetchJobs])
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -48,7 +47,7 @@ const Jobs = () => {
         className="bg-white rounded-2xl shadow p-6 mb-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-          
+
           <input
             type="text"
             placeholder="Search by title..."
